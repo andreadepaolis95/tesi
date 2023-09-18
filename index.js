@@ -42,8 +42,8 @@ app.get('/',(req,res) =>{
     <body>
       <h1>Download</h1>
       <a href="/download?file=5">Download File 5Mb</a>
-      <a href="/download?file=20">Download File 20Mb</a>
-      <a href="/download?file=100">Download File 100Mb</a>
+      <a href="/download?file=10">Download File 10Mb</a>
+      <a href="/download?file=25">Download File 25Mb</a>
     </body>
   </html>
 `;
