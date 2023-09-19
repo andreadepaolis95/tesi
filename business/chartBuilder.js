@@ -1,22 +1,21 @@
 const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 const {getChartColor} = require('../config/config');
 // Crea un'istanza di ChartJSNodeCanvas
-const width = 800; // Larghezza del grafico
-const height = 500; // Altezza del grafico
+const width = 500; // Larghezza del grafico
+const height = 300; // Altezza del grafico
 const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height });
 
 
 // Funzione per generare il grafico
-const generateChart = async(jsonData) => {
-  let count = 0;
+const generateChart = async(jsonData,colorIndex) => {
   const configuration = {
     type: 'bar',
     data: {
-      labels: jsonData.map(item => new Date(item.date).toLocaleString()),
+      labels: jsonData.map(item => item.ip),
       datasets: [{
         label: 'Bit Rate (Mbps)',
         data: jsonData.map(item=>item.bit),
-        ... getChartColor(1)
+        ... getChartColor(colorIndex)
       }]
     },
     options: {

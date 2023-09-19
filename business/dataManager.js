@@ -6,14 +6,17 @@ const buildDataMapForChart = async(logFilePath) =>{
     let buff = await fs.readFile(logFilePath);
     let dataAsString = buff.toString();
     let dataAsJson = JSON.parse(dataAsString);
+    dataAsJson = dataAsJson.sort((a,b) => a.date -b.date  )
+
     dataAsJson.forEach(element => {
     element.bit = element.bit / 1000000;
-    if(dataMap.has(element.ip)){
-      let valuesForCurrentIp = dataMap.get(element.ip);
-      valuesForCurrentIp.push(element);
-      dataMap.set(element.ip,valuesForCurrentIp);
+    element.testCase = new Date(element.date).toLocaleDateString() + ' ' + determinaPeriodoDelGiorno(element.date);
+    if(dataMap.has(element.testCase)){
+      let valuesForCurrentDate = dataMap.get(element.testCase);
+      valuesForCurrentDate.push(element);
+      dataMap.set(element.testCase,valuesForCurrentDate);
     } else {
-      dataMap.set(element.ip,[element]);
+      dataMap.set(element.testCase,[element]);
     }
   });
 
@@ -21,6 +24,33 @@ const buildDataMapForChart = async(logFilePath) =>{
   return dataMap;
 
 }
+
+
+
+function determinaPeriodoDelGiorno(date) {
+
+  const data = new Date(date);
+
+  // Estrai l'ora dalla data
+  const ora = data.getHours();
+
+  // Determina il periodo del giorno
+  if (ora >= 5 && ora < 12) {
+    return "Mattina";
+  } else if (ora >= 12 && ora < 18) {
+    return "Pomeriggio";
+  } else if (ora >= 18 && ora < 22) {
+    return "Sera";
+  } else {
+    return "Notte";
+  }
+}
+
+// Esempio di utilizzo:
+const dataInMillisecondi = Date.now(); // Usa la data attuale
+const periodoDelGiorno = determinaPeriodoDelGiorno(dataInMillisecondi);
+console.log(`Il periodo del giorno è: ${periodoDelGiorno}`);
+
 
 
 
