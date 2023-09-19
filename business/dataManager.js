@@ -10,7 +10,7 @@ const buildDataMapForChart = async(logFilePath) =>{
 
     dataAsJson.forEach(element => {
     element.bit = element.bit / 1000000;
-    element.testCase = new Date(element.date).toLocaleDateString() + ' ' + determinaPeriodoDelGiorno(element.date);
+    element.testCase = new Date(element.date).toLocaleDateString() + ' - ' + determinaPeriodoDelGiorno(element.date);
     if(dataMap.has(element.testCase)){
       let valuesForCurrentDate = dataMap.get(element.testCase);
       valuesForCurrentDate.push(element);
@@ -46,10 +46,6 @@ function determinaPeriodoDelGiorno(date) {
   }
 }
 
-// Esempio di utilizzo:
-const dataInMillisecondi = Date.now(); // Usa la data attuale
-const periodoDelGiorno = determinaPeriodoDelGiorno(dataInMillisecondi);
-console.log(`Il periodo del giorno è: ${periodoDelGiorno}`);
 
 
 
