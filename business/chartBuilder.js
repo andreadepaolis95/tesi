@@ -14,22 +14,9 @@ const generateChart = async(jsonData) => {
     data: {
       labels: jsonData.map(item => new Date(item.date).toLocaleString()),
       datasets: [{
-        label: 'BitRate',
-        data: jsonData.filter(item => item.fileSize > 5000000).map(item=>item.bit),
+        label: 'Bit Rate (Mbps)',
+        data: jsonData.map(item=>item.bit),
         ... getChartColor(1)
-      },{
-
-          label: 'BitRate',
-          data: jsonData.filter(item => item.fileSize < 9242880).map(item=>item.bit),
-          ... getChartColor(2)
-      }, {
-
-
-        label: 'BitRate File',
-        data: jsonData.filter(item => item.fileSize > 9242880 && item.fileSize < 59242880).map(item=>item.bit),
-        ... getChartColor(3)
-
-
       }]
     },
     options: {

@@ -3,6 +3,12 @@ const getChartColor = (color) => {
     let backgroundColor;
     let borderColor;
 
+    if(color == 0){
+        backgroundColor =  'rgba(120, 76, 30, 0.3)',
+        borderColor = 'rgba(35, 35, 255, 1)'
+    }
+
+
     if(color == 1){
       backgroundColor =  'rgba(35, 35, 255, 0.3)',
       borderColor = 'rgba(35, 35, 255, 1)'

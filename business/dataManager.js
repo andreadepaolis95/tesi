@@ -7,7 +7,7 @@ const buildDataMapForChart = async(logFilePath) =>{
     let dataAsString = buff.toString();
     let dataAsJson = JSON.parse(dataAsString);
     dataAsJson.forEach(element => {
-    element.bit = element.bit / 1000;
+    element.bit = element.bit / 1000000;
     if(dataMap.has(element.ip)){
       let valuesForCurrentIp = dataMap.get(element.ip);
       valuesForCurrentIp.push(element);

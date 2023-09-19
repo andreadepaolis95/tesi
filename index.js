@@ -1,13 +1,11 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const fs = require('fs').promises;
 const cors = require('cors');
 const requestIp = require('request-ip');
-const axios = require('axios');
-const { generateChart } = require('./business/chartBuilder');
-const { buildDataMapForChart } = require('./business/dataManager');
-const {logDownloadRecord} = require('./business/logManager');
+
+const { logDownloadRecord, cleanLogFile } = require('./business/logManager');
+const { loadHomePageHtml , loadGraphPageHtml } = require('./business/htmlController');
 
 // Definisci la directory che contiene i tuoi file
 const assetsDirectory = path.join(__dirname, 'assets');
@@ -30,28 +28,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/',(req,res) =>{
 
 
-  let html = `
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <title>Grafico</title>
-    </head>
-    <body>
-      <h1>Download</h1>
-      <a href="/download?file=5">Download File 5Mb</a>
-      <a href="/download?file=10">Download File 10Mb</a>
-      <a href="/download?file=25">Download File 25Mb</a>
-    </body>
-  </html>
-`;
+app.get('/',async(req,res) =>{
 
-res.send(html);
+  const html = await loadHomePageHtml();
 
-  res.end();
-
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  res.end(html);
     
 })
 
@@ -62,33 +46,9 @@ res.send(html);
 
 app.get('/log',  async(req,res) =>{
 
-  let dataMap = await buildDataMapForChart(logFilePath);
-  
+  let html = await loadGraphPageHtml(logFilePath)
 
-  let html = `
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <title>Grafico</title>
-    </head>
-    <body>
-      <h1>Grafico</h1>`;
-      let count = 0;
-      for(let key of dataMap.keys()){
-        count ++;
-        const chart = await generateChart(dataMap.get(key), count);
-          html = html + 
-          `<h3>IP: ${key}<h3>
-          <img src="data:image/png;base64,${chart}" alt="Grafico" />`
-      }
-
-
-      `
-    </body>
-  </html>
-`;
-
-res.send(html);
+  res.send(html);
 
   res.end();
   
@@ -96,6 +56,17 @@ res.send(html);
     
 })
 
+
+app.get('/clean', async(req,res) =>{
+
+    await cleanLogFile(logFilePath);
+
+    res.send('<h1>Log Restarted</h1>');
+
+    res.end();
+    
+
+})
 
 
 // Configura la route per il download

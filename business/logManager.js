@@ -41,4 +41,21 @@ const logDownloadRecord = async(filePath,clientIp,logFilePath, downloadTime) =>{
 
 
 
-module.exports = { logDownloadRecord : logDownloadRecord }
+const cleanLogFile = async(logFilePath) =>{
+
+
+        const emptyArray = [];
+
+        const emptyArrayAsString = JSON.stringify(emptyArray, null, 2);
+
+        await fs.writeFile(logFilePath, emptyArrayAsString);
+        
+        return;
+
+};
+
+
+
+
+
+module.exports = { logDownloadRecord : logDownloadRecord, cleanLogFile: cleanLogFile}
