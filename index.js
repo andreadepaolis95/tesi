@@ -4,7 +4,7 @@ const path = require('path');
 const cors = require('cors');
 const requestIp = require('request-ip');
 
-const { logDownloadRecord, cleanLogFile , getLogRawData} = require('./business/logManager');
+const { logDownloadRecord, cleanLogFile , getLogRawData, updateRowData, deleteLast} = require('./business/logManager');
 const { loadHomePageHtml , loadGraphPageHtml } = require('./business/htmlController');
 
 // Definisci la directory che contiene i tuoi file
@@ -16,6 +16,16 @@ const logFilePath = path.join(__dirname, 'download.log');
 app.use(cors());
 app.use(requestIp.mw());
 
+function handleGlobalError(error) {
+  console.error("Errore globale catturato:");
+  console.error(error.stack || error);
+
+}
+
+process.on('uncaughtException', (error) => {
+  handleGlobalError(error);
+
+});
 
 
 app.get('/',async(req,res) =>{
@@ -29,15 +39,20 @@ app.get('/',async(req,res) =>{
 
 app.get('/raw', async(req,res) =>{
 
-  const data = await getLogRawData(logFilePath);
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end(JSON.stringify(data));
-  
+  const html = await getLogRawData(logFilePath);
+
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  res.end(html);
     
 })
 
 
+app.get('/deleteLast', async(req,res) =>{
 
+  await deleteLast(logFilePath, req.query.text);
+  res.send('<h1>Log Saved</h1>');
+   
+})
 
 
 
@@ -51,6 +66,16 @@ app.get('/log',  async(req,res) =>{
   
   
     
+})
+
+
+app.get('/updateRowData', async(req,res) =>{
+
+   await updateRowData(logFilePath, req.query.text);
+   res.send('<h1>Log Saved</h1>');
+
+   res.end();
+   
 })
 
 

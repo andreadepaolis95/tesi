@@ -1,4 +1,5 @@
 const fs = require('fs').promises;
+const path = require('path');
 const { getCountryFromIp } = require('./ipRetriver');
 
 
@@ -13,9 +14,18 @@ const logDownloadRecord = async(filePath,clientIp,logFilePath, downloadTime) =>{
                 return;
         }
         // Registra il tempo di download, il bit rate e la nazione nel file di log
+        let country = 'Italy';
+
+        try{
+        let countryFromIp = await getCountryFromIp(clientIp);
+        country = countryFromIp;
+        } catch(e){
+                console.log(e);
+        }
+
         const newLogRecord = { 
                  ip : clientIp,
-                 country : await getCountryFromIp(clientIp),
+                 country : country,
                  download_time: downloadTime , 
                  bit: bitRate.toFixed(2),
                  date: Date.now(),
@@ -46,10 +56,48 @@ const logDownloadRecord = async(filePath,clientIp,logFilePath, downloadTime) =>{
 
 const getLogRawData = async(logFilePath) =>{
 
+  
+        const rawDataHtmlFilePath = path.join(__dirname, '../public', 'raw.html');
+        
         let data = await fs.readFile(logFilePath,'utf-8');
-        return JSON.parse(data);
+     
+        // Analizza il contenuto del file in un oggetto JavaScript
+        const LogDataSet = JSON.parse(data);
+            
+        // Modifica l'array JSON aggiungendo un valore (esempio: un oggetto)
+        let rawDataPage = await fs.readFile(rawDataHtmlFilePath);
+
+        let rawDataPageAsString = rawDataPage.toString();
+
+        rawDataPageAsString = rawDataPageAsString.replace('$$$$$', JSON.stringify(LogDataSet));
+
+    
+        return rawDataPageAsString;
 }
 
+const updateRowData = async(logFilePath, data) =>{
+
+                   // Scrivi il nuovo contenuto nel file
+         await fs.writeFile(logFilePath, data);
+        //await fs.writeFile(logFilePath, data);
+}
+
+
+const deleteLast = async(logFilePath) =>{
+
+        let data = await fs.readFile(logFilePath,'utf-8');
+     
+           // Analizza il contenuto del file in un oggetto JavaScript
+        const LogDataSet = JSON.parse(data);
+               
+        LogDataSet.pop();
+               
+                   // Converte l'oggetto JavaScript modificato in formato JSON
+        const LogDataSetAsString = JSON.stringify(LogDataSet, null, 2);
+        
+                   // Scrivi il nuovo contenuto nel file
+        await fs.writeFile(logFilePath, LogDataSetAsString);
+}
 
 
 const cleanLogFile = async(logFilePath) =>{
@@ -69,4 +117,4 @@ const cleanLogFile = async(logFilePath) =>{
 
 
 
-module.exports = { logDownloadRecord : logDownloadRecord, cleanLogFile: cleanLogFile , getLogRawData: getLogRawData}
+module.exports = { logDownloadRecord : logDownloadRecord, cleanLogFile: cleanLogFile , getLogRawData: getLogRawData, updateRowData: updateRowData , deleteLast:deleteLast}
