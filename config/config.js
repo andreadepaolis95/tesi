@@ -44,5 +44,17 @@ const getChartColor = (color) => {
 }
 
 
+const getIpCalloutOptions = (ipAddress) =>{
 
-module.exports = { getChartColor: getChartColor}
+return {
+    hostname: 'ip-api.com',
+    port: 80,
+    path: `/json/${ipAddress}`,
+    method: 'GET',
+    };
+}
+
+
+
+
+module.exports = { getChartColor: getChartColor, getIpCalloutOptions : getIpCalloutOptions}

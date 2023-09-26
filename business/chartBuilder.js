@@ -12,40 +12,40 @@ const generateChart = async(jsonData) => {
     const dataSetForIp = {};
   
     jsonData.forEach((element) => {
-      const { ip, bit } = element;
+      const { country, bit } = element;
   
-      if (!dataSetForIp[ip]) {
-        dataSetForIp[ip] = { count: 0, totalBitrate: 0 };
+      if (!dataSetForIp[country]) {
+        dataSetForIp[country] = { count: 0, totalBitrate: 0 };
       }
   
-      dataSetForIp[ip].count++;
-      dataSetForIp[ip].totalBitrate += bit;
-      dataSetForIp[ip]
+      dataSetForIp[country].count++;
+      dataSetForIp[country].totalBitrate += bit;
+      dataSetForIp[country]
     });
     let colorIndex = 0;
-    const risultato = Object.keys(dataSetForIp).map((ip) => {
+    const risultato = Object.keys(dataSetForIp).map((country) => {
       colorIndex++
-      const { count, totalBitrate } = dataSetForIp[ip];
+      const { count, totalBitrate } = dataSetForIp[country];
       const mediaBitrate = totalBitrate / count;
   
       return {
-        ip: ip,
+        country: country,
         data: mediaBitrate,
-        label: 'Bit Rate (Mbps) ' + ip,
-        stack: ip,
+        label: 'Bit Rate (Mbps) ' + country,
+        stack: country,
         ...getChartColor(colorIndex), // Assegna il colore separatamente per ciascun dataset
       };
     });
     
     let result = {};
-    result.label = 'X:IP Address -- Y: Bit Rate (Mbps)'
+    result.label = 'Bit Rate (Mbps)'
     result.data = risultato.map(item => item.data);
     result.backgroundColor = risultato.map(item => item.backgroundColor);
   
     const configuration = {
       type: 'bar',
       data: {
-        labels: risultato.map((item) => item.ip),
+        labels: risultato.map((item) => item.country),
         datasets: [result]
         
 

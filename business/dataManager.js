@@ -51,4 +51,4 @@ function determinaPeriodoDelGiorno(date) {
 
 
 
-module.exports = {buildDataMapForChart: buildDataMapForChart }
+module.exports = { buildDataMapForChart: buildDataMapForChart }
