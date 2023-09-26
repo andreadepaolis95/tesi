@@ -17,8 +17,9 @@ const getCountryFromIp = async(ipAddress) => {
                 const result = JSON.parse(data);
                 if (result.status === 'success') {
                     console.log(`Stato di provenienza per l'indirizzo IP ${ipAddress}: ${result.country}`);
-                    if(country != undefined){
+                    if(result.country != undefined){
                         country = result.country;
+                        return country;
                     }
                 } else {
                     console.error('Impossibile trovare lo stato di provenienza per questo indirizzo IP.');
@@ -34,7 +35,7 @@ const getCountryFromIp = async(ipAddress) => {
     });
 
     req.end();
-    return country;
+   
 }
 
 
