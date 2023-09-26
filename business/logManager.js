@@ -8,7 +8,10 @@ const logDownloadRecord = async(filePath,clientIp,logFilePath, downloadTime) =>{
         const fileSizeBytes = await fs.stat(filePath).catch(e => console.log(e)); // Dimensione del file in byte
         const fileSizeBits = fileSizeBytes.size * 8; // Dimensione del file in bit
         const bitRate = fileSizeBits / downloadTime; // Calcolo del bit rate in bit al secondo
-     
+        if(downloadTime < 4){ 
+                console.log('Cached, skip log ');
+                return;
+        }
         // Registra il tempo di download, il bit rate e la nazione nel file di log
         const newLogRecord = { 
                  ip : clientIp,
