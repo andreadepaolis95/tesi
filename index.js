@@ -4,7 +4,7 @@ const path = require('path');
 const cors = require('cors');
 const requestIp = require('request-ip');
 
-const { logDownloadRecord, cleanLogFile } = require('./business/logManager');
+const { logDownloadRecord, cleanLogFile , getLogRawData} = require('./business/logManager');
 const { loadHomePageHtml , loadGraphPageHtml } = require('./business/htmlController');
 
 // Definisci la directory che contiene i tuoi file
@@ -17,18 +17,6 @@ app.use(cors());
 app.use(requestIp.mw());
 
 
-app.use((req, res, next) => {
-  // Ottieni l'indirizzo IP del client dalla richiesta
-  const clientIp = req.clientIp;
-  
-  // Registra la richiesta nel log
-  console.log(`Richiesta da ${clientIp} - URL: ${req.originalUrl}`);
-  
-  // Continua con la gestione della richiesta
-  next();
-});
-
-
 
 app.get('/',async(req,res) =>{
 
@@ -36,6 +24,15 @@ app.get('/',async(req,res) =>{
 
   res.writeHead(200, { 'Content-Type': 'text/html' });
   res.end(html);
+    
+})
+
+app.get('/raw', async(req,res) =>{
+
+  const data = await getLogRawData(logFilePath);
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end(JSON.stringify(data));
+  
     
 })
 

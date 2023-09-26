@@ -41,6 +41,14 @@ const logDownloadRecord = async(filePath,clientIp,logFilePath, downloadTime) =>{
 
 
 
+const getLogRawData = async(logFilePath) =>{
+
+        let data = await fs.readFile(logFilePath,'utf-8');
+        return JSON.parse(data);
+}
+
+
+
 const cleanLogFile = async(logFilePath) =>{
 
 
@@ -58,4 +66,4 @@ const cleanLogFile = async(logFilePath) =>{
 
 
 
-module.exports = { logDownloadRecord : logDownloadRecord, cleanLogFile: cleanLogFile}
+module.exports = { logDownloadRecord : logDownloadRecord, cleanLogFile: cleanLogFile , getLogRawData: getLogRawData}
