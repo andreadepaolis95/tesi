@@ -6,7 +6,7 @@ const buildDataMapForChart = async(logFilePath) =>{
     let buff = await fs.readFile(logFilePath);
     let dataAsString = buff.toString();
     let dataAsJson = JSON.parse(dataAsString);
-    dataAsJson = dataAsJson.sort((a,b) => a.date -b.date  )
+    dataAsJson = dataAsJson.sort((a,b) => a.country - b.country  )
 
     dataAsJson.forEach(element => {
     element.bit = element.bit / 1000000;

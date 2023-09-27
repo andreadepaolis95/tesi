@@ -10,7 +10,7 @@ const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height });
 const generateChart = async(jsonData) => {
 
     const dataSetForIp = {};
-  
+    const countryColor = {};
     jsonData.forEach((element) => {
       const { country, bit } = element;
   
@@ -23,7 +23,7 @@ const generateChart = async(jsonData) => {
       dataSetForIp[country]
     });
     let colorIndex = 0;
-    const risultato = Object.keys(dataSetForIp).map((country) => {
+    let risultato = Object.keys(dataSetForIp).map((country) => {
       colorIndex++
       const { count, totalBitrate } = dataSetForIp[country];
       const mediaBitrate = totalBitrate / count;
@@ -33,10 +33,22 @@ const generateChart = async(jsonData) => {
         data: mediaBitrate,
         label: 'Bit Rate (Mbps) ' + country,
         stack: country,
-        ...getChartColor(colorIndex), // Assegna il colore separatamente per ciascun dataset
+        ...getChartColor(country), // Assegna il colore separatamente per ciascun dataset
       };
     });
-    
+
+    risultato = risultato.sort((a,b) => {
+        const countryA = a.country.toUpperCase(); // Converte la stringa in maiuscolo per l'ordinamento senza distinzione tra maiuscole e minuscole
+        const countryB = b.country.toUpperCase();
+
+        if (countryA < countryB) {
+          return -1; // a viene prima di b
+        } else if (countryA > countryB) {
+          return 1; // b viene prima di a
+        } else {
+          return 0; // a e b sono equivalenti
+        }});
+
     let result = {};
     result.label = 'Bit Rate (Mbps)'
     result.data = risultato.map(item => item.data);

@@ -1,4 +1,16 @@
-const getChartColor = (color) => {
+const colorAssignedForCountry = [];
+
+const getChartColor = (country) => {
+    let color;
+    if(colorAssignedForCountry.includes(country)){
+        color = colorAssignedForCountry.indexOf(country) +1;
+
+    } else {
+        colorAssignedForCountry.push(country);
+        color = colorAssignedForCountry.length;
+
+    }
+    
 
     let backgroundColor;
     let borderColor;
