@@ -1,10 +1,1 @@
-[
-  {
-    "ip": "::1",
-    "country": "Italy",
-    "download_time": 221,
-    "bit": "379575.02",
-    "date": 1695747907857,
-    "fileSize": 10485760
-  }
-]
+[{"ip":"::1","country":"Italy","download_time":221,"bit":"379575.02","date":1695747907857,"fileSize":10485760},{"ip":"2.42.134.140","country":"Italy","download_time":598,"bit":"350694.31","date":1695748324555,"fileSize":26214400},{"ip":"77.111.245.12","country":"Singapore","download_time":329,"bit":"637432.22","date":1695748353052,"fileSize":26214400},{"ip":"77.111.245.12","country":"Singapore","download_time":265,"bit":"316551.25","date":1695748397243,"fileSize":10485760},{"ip":"77.111.246.5","country":"United States","download_time":45,"bit":"932067.56","date":1695748484044,"fileSize":5242880},{"ip":"2.42.134.140","country":"Italy","download_time":57,"bit":"1471685.61","date":1695748499953,"fileSize":10485760},{"ip":"2.42.134.140","country":"Italy","download_time":394,"bit":"532272.08","date":1695748543842,"fileSize":26214400},{"ip":"2.42.134.140","country":"Italy","download_time":11,"bit":"3813003.64","date":1695748595900,"fileSize":5242880},{"ip":"77.111.247.54","country":"Sweden","download_time":455,"bit":"460912.53","date":1695748819056,"fileSize":26214400},{"ip":"2.42.134.140","country":"Italy","download_time":26,"bit":"3226387.69","date":1695748837349,"fileSize":10485760},{"ip":"77.111.247.54","country":"Sweden","download_time":160,"bit":"524288.00","date":1695748848645,"fileSize":10485760},{"ip":"77.111.247.54","country":"Sweden","download_time":615,"bit":"341000.33","date":1695748916542,"fileSize":26214400},{"ip":"77.111.247.54","country":"Sweden","download_time":22,"bit":"3813003.64","date":1695748926045,"fileSize":10485760},{"ip":"77.111.247.54","country":"Sweden","download_time":8,"bit":"5242880.00","date":1695748933980,"fileSize":5242880},{"ip":"2.42.134.140","country":"Italy","download_time":9,"bit":"4660337.78","date":1695748957663,"fileSize":5242880}]
