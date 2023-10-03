@@ -19,6 +19,7 @@ const logDownloadRecord = async(filePath,clientIp,logFilePath, downloadTime) =>{
         try{
         let countryFromIp = await getCountryFromIp(clientIp);
         country = countryFromIp;
+        
         } catch(e){
                 console.log(e);
         }
@@ -63,13 +64,14 @@ const getLogRawData = async(logFilePath) =>{
      
         // Analizza il contenuto del file in un oggetto JavaScript
         const LogDataSet = JSON.parse(data);
+        
+        const logDataSetSorted = LogDataSet.sort((a,b) => a.date - b.date);
             
-        // Modifica l'array JSON aggiungendo un valore (esempio: un oggetto)
         let rawDataPage = await fs.readFile(rawDataHtmlFilePath);
 
         let rawDataPageAsString = rawDataPage.toString();
 
-        rawDataPageAsString = rawDataPageAsString.replace('$$$$$', JSON.stringify(LogDataSet));
+        rawDataPageAsString = rawDataPageAsString.replace('$$$$$', JSON.stringify(logDataSetSorted));
 
     
         return rawDataPageAsString;

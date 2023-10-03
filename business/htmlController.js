@@ -74,7 +74,7 @@ const loadGraphPageHtml = async(logFilePath) => {
     </head>
     <body>
     <div class="header">
-      <h1>Grafico</h1>
+      <h1>Stats</h1>
     </div>
     <div class="box">
       `

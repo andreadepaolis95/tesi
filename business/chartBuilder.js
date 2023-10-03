@@ -1,7 +1,8 @@
 const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 const {getChartColor} = require('../config/config');
+const { getLocation } = require('../config/location');
 // Crea un'istanza di ChartJSNodeCanvas
-const width = 500; // Larghezza del grafico
+const width = 1000; // Larghezza del grafico
 const height = 300; // Altezza del grafico
 const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height });
 
@@ -10,7 +11,6 @@ const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height });
 const generateChart = async(jsonData) => {
 
     const dataSetForIp = {};
-    const countryColor = {};
     jsonData.forEach((element) => {
       const { country, bit } = element;
   
@@ -20,15 +20,18 @@ const generateChart = async(jsonData) => {
   
       dataSetForIp[country].count++;
       dataSetForIp[country].totalBitrate += bit;
-      dataSetForIp[country]
+
     });
     let colorIndex = 0;
     let risultato = Object.keys(dataSetForIp).map((country) => {
       colorIndex++
       const { count, totalBitrate } = dataSetForIp[country];
       const mediaBitrate = totalBitrate / count;
+      const location = getLocation(country);
   
       return {
+        displayCountry : location.location + ' (' + location.distanceAsString  + ' km)',
+        distance: location.distance,
         country: country,
         data: mediaBitrate,
         label: 'Bit Rate (Mbps) ' + country,
@@ -38,8 +41,8 @@ const generateChart = async(jsonData) => {
     });
 
     risultato = risultato.sort((a,b) => {
-        const countryA = a.country.toUpperCase(); // Converte la stringa in maiuscolo per l'ordinamento senza distinzione tra maiuscole e minuscole
-        const countryB = b.country.toUpperCase();
+        const countryA = a.distance;
+        const countryB = b.distance;
 
         if (countryA < countryB) {
           return -1; // a viene prima di b
@@ -57,7 +60,7 @@ const generateChart = async(jsonData) => {
     const configuration = {
       type: 'bar',
       data: {
-        labels: risultato.map((item) => item.country),
+        labels: risultato.map((item) => item.displayCountry),
         datasets: [result]
         
 

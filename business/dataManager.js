@@ -10,7 +10,7 @@ const buildDataMapForChart = async(logFilePath) =>{
 
     dataAsJson.forEach(element => {
     element.bit = element.bit / 1000000;
-    element.testCase = new Date(element.date).toLocaleDateString() + ' - ' + determinaPeriodoDelGiorno(element.date);
+    element.testCase = new Date(element.date).toLocaleDateString();
     if(dataMap.has(element.testCase)){
       let valuesForCurrentDate = dataMap.get(element.testCase);
       valuesForCurrentDate.push(element);
