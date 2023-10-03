@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const cors = require('cors');
 const requestIp = require('request-ip');
+const fs = require('fs');
 
 const { logDownloadRecord, cleanLogFile , getLogRawData, updateRowData, deleteLast} = require('./business/logManager');
 const { loadHomePageHtml , loadGraphPageHtml } = require('./business/htmlController');
@@ -26,6 +27,13 @@ process.on('uncaughtException', (error) => {
   handleGlobalError(error);
 
 });
+
+/*
+app.use((req, res, next) => {
+  console.log(`Richiesta ${req.method} a ${req.path}`);
+  next(); // Passa al middleware successivo
+});
+*/
 
 
 app.get('/',async(req,res) =>{
@@ -87,6 +95,17 @@ app.get('/clean', async(req,res) =>{
 
     res.end();
     
+
+})
+
+
+app.get('/favicon.ico', async(req,res) =>{
+
+    const favicon = path.join(__dirname, 'public', 'favicon.ico');
+    res.setHeader('Content-Type', 'image/x-icon');  
+    fs.createReadStream(favicon).pipe(res);
+  
+
 
 })
 

@@ -32,7 +32,7 @@ const loadGraphPageHtml = async(logFilePath) => {
   <!DOCTYPE html>
   <html>
     <head>
-      <title>Grafico</title>
+      <title>Speedtracker - Statistiche</title>
       <style> 
       
       html{
@@ -74,7 +74,7 @@ const loadGraphPageHtml = async(logFilePath) => {
     </head>
     <body>
     <div class="header">
-      <h1>Stats</h1>
+      <h1>Statistiche</h1>
     </div>
     <div class="box">
       `

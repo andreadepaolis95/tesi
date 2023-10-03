@@ -2,7 +2,7 @@ const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 const {getChartColor} = require('../config/config');
 const { getLocation } = require('../config/location');
 // Crea un'istanza di ChartJSNodeCanvas
-const width = 1000; // Larghezza del grafico
+const width = 900; // Larghezza del grafico
 const height = 300; // Altezza del grafico
 const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height });
 

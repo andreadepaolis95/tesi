@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Download Test - Home</title>
-    <link rel="icon" href="/public/logo.ico" type="image/x-icon" >
+    <title>Speedtracker - Home</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" >
 
 
     <style>
@@ -68,7 +68,25 @@
             font-weight: bold;
             opacity: 0.6;
           }
+
+          .down{
+            width: 100%;
+            background-color: #eaa6f7;
+            border-radius: 8px;
+            min-height: 40px;
+            min-width: 400px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+          }
     
+          .down:hover{
+            transform: scale(1.02);
+            transition-duration: 0.4s;
+          }
     
       </style>
 
@@ -95,5 +113,10 @@
     </div>
   </a>
   </div>
+    <div class="box">
+        <a href="/log">
+          <div class="down">Visualizza Dati</div>
+        </a>
+    </div>
   </body>
 </html>
