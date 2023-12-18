@@ -9,8 +9,8 @@ const buildDataMapForChart = async(logFilePath) =>{
     dataAsJson = dataAsJson.sort((a,b) => a.country - b.country  )
 
     dataAsJson.forEach(element => {
-    //element.bit = element.bit / 1000000;
-    element.bit = element.bit * 1;
+     element.bit = element.bit / 10;
+    //element.bit = element.bit * 1;
 
     element.testCase = new Date(element.date).toLocaleDateString();
     if(dataMap.has(element.testCase)){
